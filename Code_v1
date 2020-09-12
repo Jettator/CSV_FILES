@@ -1,0 +1,67 @@
+using System;
+using System.IO;
+
+namespace Registro_de_datos
+{
+
+    class Program
+    {
+
+        static void Main(string[] args)
+        {
+            string ruta = args[0];
+            recive(ruta);
+            
+        }
+        static void recive(string rutav)
+        {
+            string cedula, nombre, apellidos, edad, op;
+            string coma = ",";
+
+            Console.WriteLine("Ingrese los siguientes datos: ");
+            Console.WriteLine("Cedula: ");
+            cedula = Console.ReadLine();
+            Console.WriteLine("Nombre: ");
+            nombre = Console.ReadLine();
+            Console.WriteLine("Apellidos: ");
+            apellidos = Console.ReadLine();
+            Console.WriteLine("Edad: ");
+            edad = Console.ReadLine();
+
+            
+
+            Console.WriteLine("Desea hacer? Grabar|Continuar|Salir");
+            op = Console.ReadLine();
+            opcion(op, rutav, cedula, nombre, apellidos, edad, coma);
+  
+        }
+ 
+        static string opcion (string opv, string rutaop, string cedula, string nombre, string apellidos, string edad, string coma)
+        {
+          switch (opv.ToLower())
+            {
+                case "g":
+                if (!File.Exists(rutaop))
+            {
+                string createText = "Cedula"+coma+"Nombre"+coma+"Apellidos"+coma+"Edad"+Environment.NewLine;
+                File.WriteAllText(rutaop, createText);
+            }
+                string appendText = (Environment.NewLine+ $"{cedula},{nombre},{apellidos},{edad}");
+                File.AppendAllText(rutaop, appendText);
+                break;
+                case "c":
+                recive(rutaop);
+                break;
+                case "s":
+                System.Environment.Exit(1);
+                break;
+
+            }
+            return opv;
+        }
+
+    }
+
+}
+
+
