@@ -13,55 +13,55 @@ namespace Registro_de_datos
             recive(ruta);
             
         }
-        static void recive(string rutav)
+        static void recive(string ruta)
         {
-            string cedula, nombre, apellidos, edad, op;
-            string coma = ",";
+           string cedula, nombre, apellidos, edad, op;
+           string coma = ","; 
 
-            Console.WriteLine("Ingrese los siguientes datos: ");
-            Console.WriteLine("Cedula: ");
-            cedula = Console.ReadLine();
-            Console.WriteLine("Nombre: ");
-            nombre = Console.ReadLine();
-            Console.WriteLine("Apellidos: ");
-            apellidos = Console.ReadLine();
-            Console.WriteLine("Edad: ");
-            edad = Console.ReadLine();
+           Console.WriteLine("Ingrese los siguientes valores: ");
+           Console.WriteLine("Cedula: ");
+           cedula = Console.ReadLine();
+           Console.WriteLine("Nombre: ");
+           nombre = Console.ReadLine();
+           Console.WriteLine("Apellidos ");
+           apellidos = Console.ReadLine();
+           Console.WriteLine("Edad: ");
+           edad = Console.ReadLine();
 
-            
+           Console.WriteLine("Que desea? (G)rabar|(C)ontinuar|(S)alir ");
+           op = Console.ReadLine();
+           op.ToLower();
+           opcion(op, ruta, cedula, nombre, apellidos,edad, coma);
 
-            Console.WriteLine("Desea hacer? Grabar|Continuar|Salir");
-            op = Console.ReadLine();
-            opcion(op, rutav, cedula, nombre, apellidos, edad, coma);
-  
         }
- 
-        static string opcion (string opv, string rutaop, string cedula, string nombre, string apellidos, string edad, string coma)
+
+        static void opcion(string op, string ruta, string cedula, string nombre, string apellido, string edad, string coma)
         {
-          switch (opv.ToLower())
+            switch(op)
             {
                 case "g":
-                if (!File.Exists(rutaop))
-            {
-                string createText = "Cedula"+coma+"Nombre"+coma+"Apellidos"+coma+"Edad"+Environment.NewLine;
-                File.WriteAllText(rutaop, createText);
-            }
-                string appendText = (Environment.NewLine+ $"{cedula},{nombre},{apellidos},{edad}");
-                File.AppendAllText(rutaop, appendText);
+                    if (!File.Exists(ruta))
+                    {
+                    string createText = "Cedula" + coma + "Nombre" + coma + "Apellidos" + coma + "Edad";
+                    File.WriteAllText(ruta, createText);
+                    }
+                    string appendText = (Environment.NewLine + $"{cedula},{nombre},{apellido},{edad}");
+                    File.AppendAllText(ruta, appendText);
                 break;
                 case "c":
-                recive(rutaop);
+                recive(ruta);
                 break;
                 case "s":
                 System.Environment.Exit(1);
                 break;
 
             }
-            return opv;
+
         }
-
     }
-
 }
+
+
+
 
 
