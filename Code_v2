@@ -1,0 +1,115 @@
+using System;
+using System.IO;
+
+namespace Registro_de_datos
+{
+
+    class Program
+    {
+
+
+        static void Main(string[] args)
+        {
+            string ruta = args[0];
+            recive(ruta);
+            
+        }
+
+   
+        static void recive(string ruta)
+        {
+           string cedula = "", nombre, apellidos, edad, op;
+           string coma = ","; 
+
+            string menu;
+            Console.WriteLine("********************************");
+            Console.WriteLine("**************MENU**************");
+            Console.WriteLine("*A)Guardar                     *");
+            Console.WriteLine("*B)Buscar                      *");
+            Console.WriteLine("*C)Salir                       *");
+            Console.WriteLine("********************************");
+
+            menu = Console.ReadLine();
+            menu.ToLower();
+
+            switch (menu)
+            {
+                case "a":
+                Console.WriteLine("Ingrese los siguientes valores: ");
+                Console.WriteLine("Cedula: ");
+                cedula = Console.ReadLine();
+                Console.WriteLine("Nombre: ");
+                nombre = Console.ReadLine();
+                Console.WriteLine("Apellidos ");
+                apellidos = Console.ReadLine();
+                Console.WriteLine("Edad: ");
+                edad = Console.ReadLine();
+
+                Console.WriteLine("Que desea? (G)rabar|(C)ontinuar|(S)alir ");
+                op = Console.ReadLine();
+                op.ToLower();
+                opcion(op, ruta, cedula, nombre, apellidos,edad, coma);
+                break;
+
+                case "b":
+                Console.WriteLine("Digite su cedula: ");
+                string scedula = Console.ReadLine();
+                search(ruta,scedula);
+                break;
+
+                case "c":
+                System.Environment.Exit(1);
+                break;
+
+            }
+        }
+
+        static void search(string ruta, string cedula)
+        {
+            var lines = File.ReadLines("p1.csv");
+            Console.WriteLine("Su busqueda es igual a: ");
+            foreach (var line in lines)
+            {
+                if (line.Contains(cedula))
+                {
+                    Console.WriteLine(line);
+                }
+            }
+
+        }
+        static void opcion(string op, string ruta, string cedula, string nombre, string apellido, string edad, string coma)
+        {
+            switch(op)
+            {
+                case "g":
+                    if (!File.Exists(ruta))
+                    {
+                    string createText = "Cedula" + coma + "Nombre" + coma + "Apellidos" + coma + "Edad";
+                    File.WriteAllText(ruta, createText);
+                    }
+                    string appendText = (Environment.NewLine + $"{cedula},{nombre},{apellido},{edad}");
+                    File.AppendAllText(ruta, appendText);
+                break;
+                case "c":
+                recive(ruta);
+                break;
+
+                case "s":
+                System.Environment.Exit(1);
+                break;
+
+                default:
+                Console.WriteLine("Ingrese una opcion valida");
+                Console.ReadKey();
+                recive(ruta);
+                break;
+
+            }
+
+        }
+    }
+}
+
+
+
+
